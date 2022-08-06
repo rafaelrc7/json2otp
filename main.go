@@ -34,7 +34,7 @@ func main() {
 			otpauth.Path += otp.Label
 
 			params := url.Values{}
-			params.Add("secret", otp.Secret)
+			params.Add("secret", strings.Trim(otp.Secret, "="))
 			params.Add("period", fmt.Sprint(otp.Period))
 			params.Add("digits", fmt.Sprint(otp.Digits))
 			params.Add("issuer", otp.Issuer)
