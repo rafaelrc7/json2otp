@@ -24,14 +24,11 @@ func main() {
 		}
 
 		for _, otp := range otps {
-			otpauth, err := url.Parse("otpauth://")
+			uriBase := fmt.Sprintf("otpauth://%s/%s", strings.ToLower(otp.Type), otp.Label)
+			otpauth, err := url.Parse(uriBase)
 			if err != nil {
 				log.Fatalf("url.Parse: %s", err)
 			}
-
-			otpauth.Path += strings.ToLower(otp.Type)
-			otpauth.Path += "/"
-			otpauth.Path += otp.Label
 
 			params := url.Values{}
 			params.Add("secret", strings.Trim(otp.Secret, "="))
