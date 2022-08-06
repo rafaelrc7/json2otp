@@ -32,9 +32,15 @@ func main() {
 
 			params := url.Values{}
 			params.Add("secret", strings.Trim(otp.Secret, "="))
-			params.Add("period", fmt.Sprint(otp.Period))
 			params.Add("digits", fmt.Sprint(otp.Digits))
 			params.Add("issuer", otp.Issuer)
+
+			if algorithm := strings.ToLower(otp.Algorithm); algorithm != "sha1" {
+				params.Add("algorithm", algorithm)
+			}
+			if period := otp.Period; period != 30 {
+				params.Add("period", fmt.Sprint(period))
+			}
 
 			otpauth.RawQuery = params.Encode()
 
